@@ -24,6 +24,12 @@ const server = http.createServer(function requestListener(req, res) {
         return;
     }
 
+    if (url === '/andres_weyman') {
+        const stream = fs.createReadStream('./public/curri.html');
+        stream.pipe(res);
+        return;
+    }
+
     res.writeHead(404);
     res.end();
 });
