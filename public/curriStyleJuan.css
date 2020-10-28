@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+}
+section{
+    padding: 30px;
+}
+#Header{
+    background-color: black;
+}
+#Header div {
+    display: inline-block;
+    margin-left: 40px;
+    color: white;
+}
+#subtitle{
+    font-size: 10px;
+    font-weight: normal;
+    margin-left: 5px;
+    color: gray;
+}
+#solid{
+    border-style: solid;
+    border-color: darkblue;
+    border-width: 7px;
+}

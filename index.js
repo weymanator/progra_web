@@ -24,6 +24,12 @@ const server = http.createServer(function requestListener(req, res) {
         return;
     }
 
+    if (url === '/curriJuan') {
+        const stream = fs.createReadStream('./public/curriJuan.html');
+        stream.pipe(res);
+        return;
+    }
+
     res.writeHead(404);
     res.end();
 });
