@@ -1,6 +1,6 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
 const server = http.createServer(function requestListener(req, res) {
     const { url } = req;
@@ -12,14 +12,14 @@ const server = http.createServer(function requestListener(req, res) {
         return;
     }
 
-    if (url === '/' || url === '/home') {
-        const stream = fs.createReadStream('./public/index.html');
+    if (url === "/" || url === "/home") {
+        const stream = fs.createReadStream("./public/index.html");
         stream.pipe(res);
         return;
     }
 
-    if (url === '/curri') {
-        const stream = fs.createReadStream('./public/curri.html');
+    if (url === "/curri") {
+        const stream = fs.createReadStream("./public/curri.html");
         stream.pipe(res);
         return;
     }
