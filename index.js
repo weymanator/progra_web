@@ -30,6 +30,12 @@ const server = http.createServer(function requestListener(req, res) {
         return;
     }
 
+    if (url === '/claudio') {
+        const stream = fs.createReadStream('./public/claudio_curri.html');
+        stream.pipe(res);
+        return;
+    }
+
     res.writeHead(404);
     res.end();
 });
