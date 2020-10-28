@@ -1,0 +1,30 @@
+html{
+    font-family: 'Roboto',sans-serif;
+}
+body{
+    margin: 0;
+    background-image: linear-gradient(to right, rgba( 255, 255, 255), rgb(1242, 243, 255));
+}
+
+.encabezado{
+    background-image: linear-gradient(to right, rgba( 255, 255, 255), rgb(84, 90, 255));; padding: 20px;
+    border-bottom: black 2px solid;
+    margin: 0;
+}
+#title{
+    display: inline-block; margin-left: 20px;
+}
+#vocacion{
+    font-weight: normal;
+    font-size: 20px;
+    color: black;
+}
+.information{
+    margin: 0 20px 0 20px;
+    align:'center';
+    Line-height : 25px;
+    
+}
+li{
+    list-style: none;
+}

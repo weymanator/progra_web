@@ -24,6 +24,11 @@ const server = http.createServer(function requestListener(req, res) {
         return;
     }
 
+    if (url === '/osvaldo_curri'){
+        const stream=fs.createReadStream('./public/mi_page.html');
+        stream.pipe(res);
+        return;
+    }
     res.writeHead(404);
     res.end();
 });
