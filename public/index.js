@@ -2,8 +2,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pendingTasks: [],
-            completedTasks: [],
+            tasks: [],
         }
 
         this.add = this.add.bind(this);
@@ -14,16 +13,16 @@ class App extends React.Component {
         fetch('/tasks')
             .then(data => data.json())
             .then(data => {
-                this.setState({ pendingTasks: data });
+                this.setState({ tasks: data });
             });
 
-        fetch('/task?id=1&name=hola')
-            .then(data => {
-                debugger
-            })
-            .catch(err => {
-                debugger
-            });
+        // fetch('/task?id=1&name=hola')
+        //     .then(data => {
+        //         debugger
+        //     })
+        //     .catch(err => {
+        //         debugger
+        //     });
     }
 
     add() {
@@ -40,7 +39,7 @@ class App extends React.Component {
             .then(data => data.json())
             .then(data => {
                 this.setState({
-                    pendingTasks: [...this.state.pendingTasks, data],
+                    tasks: [...this.state.tasks, data],
                 });
             })
             .catch(err => {
@@ -52,19 +51,31 @@ class App extends React.Component {
     completeTask(task) {
         const that = this;
         return function() {
-            debugger
-            const index = that.state.pendingTasks.findIndex(item => item.ID === task.ID);
-            const pendingClone = [...that.state.pendingTasks];
-            const _task = pendingClone.splice(index, 1)[0];
-            const completedClone = [...that.state.completedTasks, _task];
-            that.setState({
-                pendingTasks: pendingClone,
-                completedTasks: completedClone
-            });
+            const index = that.state.tasks.findIndex(item => item.ID === task.ID);
+
+            fetch('/tasks', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(that.state.tasks[index]),
+            })
+                .then(data => data.json())
+                .then(task => {
+                    const clone = [...that.state.tasks];
+                    clone.splice(index, 1, task);
+                    that.setState({
+                        tasks: clone,
+                    });
+                })
+                .catch(err => {
+                    alert("Algo salio mal");
+                });
         }
     }
 
     render() {
+        const pendingTasks = this.state.tasks.filter(i => !i.status);
+        const completedTasks = this.state.tasks.filter(i => i.status);;
+
         return (
             <div>
                 <h1 type="">TODO <span>Una app de tareas</span></h1>
@@ -75,10 +86,10 @@ class App extends React.Component {
                         añadir
                     </button>
                     <ul>
-                        {this.state.pendingTasks.length === 0 && (
+                        {pendingTasks.length === 0 && (
                             <li>No hay tareas</li>
                         )}
-                        {this.state.pendingTasks.map(task => (
+                        {pendingTasks.map(task => (
                             <ListItem onChange={this.completeTask(task)} key={task.ID} taskName={task.Task} />
                         ))}
                     </ul>
@@ -87,10 +98,10 @@ class App extends React.Component {
                 <section>
                     <h3>Tareas completadas</h3>
                     <ul>
-                        {this.state.completedTasks.length === 0 && (
+                        {completedTasks.length === 0 && (
                             <li>No hay tareas</li>
                         )}
-                        {this.state.completedTasks.map(task => (
+                        {completedTasks.map(task => (
                             <ListItem key={task.ID} taskName={task.Task} checked disabled />
                         ))}
                     </ul>

@@ -28,7 +28,7 @@ const tasks = [
     { ID: 1, Task: 'task 1', status: false },
     { ID: 2, Task: 'task 2', status: false },
     { ID: 3, Task: 'task 3', status: false },
-    { ID: 4, Task: 'task 4', status: false },
+    { ID: 4, Task: 'task 4', status: true },
 ];
 
 function getID(data) {
@@ -37,7 +37,7 @@ function getID(data) {
 }
 
 app.get('/task', function(req, res) {
-    console.log('PARAMS: ', req.query)
+    console.log('PARAMS: ', req.query);
 
     console.log('ID: ', req.query.id);
 });
@@ -55,6 +55,18 @@ app.post('/tasks', function(req, res) {
 
     tasks.push(task);
 
+    res.json(task);
+});
+
+app.put('/tasks', function(req, res) {
+    console.log("PARAMS: ", req.body);
+    const task = Object.assign({}, req.body);
+    task.status = !task.status;
+    const index = tasks.findIndex(i => i.ID = task.ID);
+    console.log(tasks.splice(index, 1, task));
+
+    console.log('TASKS: ', tasks);
+    
     res.json(task);
 });
 
